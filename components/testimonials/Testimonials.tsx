@@ -151,9 +151,9 @@ export function Testimonials() {
                   
                   <Link 
                     href={currentTestimonial.course.url}
-                    className="inline-flex items-center px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg group"
+                    className="inline-flex items-center px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg group cursor-pointer"
                   >
-                    <span>Explore this {currentTestimonial.course.name}</span>
+                    <span>Explore {currentTestimonial.course.name}</span>
                     <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>

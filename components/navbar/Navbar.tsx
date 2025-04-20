@@ -24,6 +24,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { SearchDialog } from "@/components/search/SearchDialog";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,6 +32,7 @@ export function Navbar() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLanguageDialogOpen, setIsLanguageDialogOpen] = useState(false);
+  const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -49,12 +51,21 @@ export function Navbar() {
       }
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setIsSearchDialogOpen(true);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -88,26 +99,14 @@ export function Navbar() {
 
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
-  // Mock search suggestions
-  const searchSuggestions = [
-    { id: 1, title: "React JS - Complete Guide 2025", category: "Development", students: "1.2M+ students", image: "https://img-c.udemycdn.com/course/50x50/1362070_b9a1_2.jpg" },
-    { id: 2, title: "Python for Data Science and Machine Learning", category: "Data Science", students: "890K+ students", image: "https://img-c.udemycdn.com/course/50x50/950390_270f_3.jpg" },
-    { id: 3, title: "Complete Web Development Bootcamp", category: "Web Development", students: "750K+ students", image: "https://img-c.udemycdn.com/course/50x50/1565838_e54e_16.jpg" },
-    { id: 4, title: "JavaScript - The Complete Guide", category: "Programming", students: "680K+ students", image: "https://img-c.udemycdn.com/course/50x50/851712_fc61_6.jpg" },
-  ];
-
-  const topSearches = [
-    "javascript", "react", "python", "web development", "data science", "machine learning", "aws", "excel"
-  ];
-
   return (
     <header
       className={cn(
-        "fixed top-0 z-50 w-full transition-all duration-300 ease-in-out bg-white border-b border-gray-200",
+        "fixed top-0 z-50 w-full transition-all duration-300 ease-in-out bg-white/70 backdrop-blur-lg border-b border-gray-200",
         isScrolled ? "shadow-sm" : ""
       )}
     >
-      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+      <div className="flex items-center justify-between py-3 px-5">
         {/* Mobile menu button */}
         <button
           className="md:hidden"
@@ -150,73 +149,20 @@ export function Navbar() {
               type="search"
               placeholder="Search for anything"
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:border-[#a435f0] focus:ring-[#a435f0]/20"
-              onFocus={() => setIsSearchFocused(true)}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onClick={() => setIsSearchDialogOpen(true)}
+              onFocus={() => setIsSearchDialogOpen(true)}
+              readOnly
             />
-            
-            {/* Search suggestions dropdown */}
-            <AnimatePresence>
-              {isSearchFocused && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden"
-                >
-                  <div className="p-4">
-                    {searchQuery ? (
-                      <>
-                        <h3 className="text-sm font-semibold text-gray-500 mb-3">Suggested for you</h3>
-                        <ul className="space-y-3">
-                          {searchSuggestions.map((suggestion) => (
-                            <li key={suggestion.id}>
-                              <Link href="#" className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-md transition-colors">
-                                <div className="relative w-10 h-10 flex-shrink-0 rounded overflow-hidden">
-                                  <Image 
-                                    src={suggestion.image} 
-                                    alt={suggestion.title}
-                                    fill
-                                    className="object-cover"
-                                  />
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="text-sm font-medium text-gray-900">{suggestion.title}</h4>
-                                  <p className="text-xs text-gray-500">{suggestion.category} • {suggestion.students}</p>
-                                </div>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    ) : (
-                      <>
-                        <h3 className="text-sm font-semibold text-gray-500 mb-3">Top Searches</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {topSearches.map((term, index) => (
-                            <Link 
-                              key={index} 
-                              href="#" 
-                              className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-sm text-gray-700 transition-colors"
-                            >
-                              {term}
-                            </Link>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  <div className="bg-gray-50 p-3 border-t border-gray-200">
-                    <Link href="#" className="text-[#a435f0] text-sm font-medium hover:text-[#8710d8] transition-colors">
-                      Browse all courses
-                    </Link>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500">
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-600">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </div>
           </div>
         </div>
+        
+        {/* Search Dialog */}
+        <SearchDialog open={isSearchDialogOpen} onOpenChange={setIsSearchDialogOpen} />
 
         {/* Business link - desktop only */}
         <div className="hidden lg:block">
@@ -230,7 +176,7 @@ export function Navbar() {
                   Udemy Business
                 </Link>
               </TooltipTrigger>
-              <TooltipContent className="bg-gray-800 text-white">
+              <TooltipContent className=" text-white">
                 <p className="text-xs">Solutions for organizations</p>
               </TooltipContent>
             </Tooltip>
@@ -249,7 +195,7 @@ export function Navbar() {
                   Teach on Udemy
                 </Link>
               </TooltipTrigger>
-              <TooltipContent className="bg-gray-800 text-white">
+              <TooltipContent className=" text-white">
                 <p className="text-xs">Share your knowledge</p>
               </TooltipContent>
             </Tooltip>
@@ -268,7 +214,7 @@ export function Navbar() {
                   My Learning
                 </Link>
               </TooltipTrigger>
-              <TooltipContent className="bg-gray-800 text-white">
+              <TooltipContent className=" text-white">
                 <p className="text-xs">Access your courses</p>
               </TooltipContent>
             </Tooltip>
@@ -287,7 +233,7 @@ export function Navbar() {
                   </Badge>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent className="bg-gray-800 text-white">
+              <TooltipContent className=" text-white">
                 <p className="text-xs">Shopping Cart</p>
               </TooltipContent>
             </Tooltip>
@@ -370,6 +316,11 @@ export function Navbar() {
                 type="search"
                 placeholder="Search for anything"
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:border-[#a435f0] focus:ring-[#a435f0]/20"
+                onClick={() => {
+                  setIsSearchDialogOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                readOnly
               />
             </div>
 

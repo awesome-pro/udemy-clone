@@ -5,340 +5,214 @@ import { Check, Info, ChevronRight, Star, Building, Users, User } from "lucide-r
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+// Define plan types
+type PlanKey = 'personal' | 'team' | 'enterprise';
+
+type PlanDetails = {
+  icon: React.ReactNode;
+  name: string;
+  title: string;
+  description: string;
+  price: string;
+  period: string;
+  billingInfo: string;
+  features: string[];
+};
+
+type PlansData = {
+  [key in PlanKey]: PlanDetails;
+};
 
 export function PricingPlans() {
-  const [selectedPlan, setSelectedPlan] = useState("personal");
+  const [selectedPlan, setSelectedPlan] = useState<PlanKey>("personal");
+
+  const plans: PlansData = {
+    personal: {
+      icon: <User className="w-4 h-4" />,
+      name: "PERSONAL",
+      title: "Individual Plan",
+      description: "Perfect for individual learners",
+      price: "₹850",
+      period: "/month",
+      billingInfo: "Billed monthly or annually. Cancel anytime.",
+      features: [
+        "Access to 12,000+ top courses",
+        "Certification prep",
+        "Goal-focused recommendations",
+        "AI-powered coding exercises"
+      ]
+    },
+    team: {
+      icon: <Users className="w-4 h-4" />,
+      name: "TEAM",
+      title: "Team Plan",
+      description: "Best for small to medium teams",
+      price: "₹1,450",
+      period: "/user/year",
+      billingInfo: "Billed annually. Minimum 5 users.",
+      features: [
+        "Access to 12,000+ top courses",
+        "Certification prep",
+        "Goal-focused recommendations",
+        "AI-powered coding exercises",
+        "Analytics and adoption reports"
+      ]
+    },
+    enterprise: {
+      icon: <Building className="w-4 h-4" />,
+      name: "ENTERPRISE",
+      title: "Enterprise Plan",
+      description: "For large organizations",
+      price: "Custom Pricing",
+      period: "",
+      billingInfo: "Tailored to your organization's needs",
+      features: [
+        "Access to 27,000+ top courses",
+        "Certification prep",
+        "Goal-focused recommendations",
+        "AI-powered coding exercises",
+        "Advanced analytics and insights",
+        "Dedicated customer success team",
+        "International course collection (15 languages)"
+      ]
+    }
+  };
 
   return (
     <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-16">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <div className="text-center mb-12">
           <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100 mb-4 px-3 py-1 text-xs font-medium rounded-full">
             FLEXIBLE PRICING
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-violet-600">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-violet-600">
             Accelerate Your Growth Journey
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Choose the perfect plan to reach your goals faster, whether for you or your entire organization.
-            All plans come with a risk-free trial.
           </p>
         </div>
 
-        {/* Plan selector tabs */}
-        <div className="flex justify-center mb-10 rounded-full">
-          <div className="bg-gray-100 p-1 rounded-full flex space-x-1">
-            <button
-              onClick={() => setSelectedPlan("personal")}
-              className={`px-6 py-3 rounded-full transition-all duration-300 font-medium ${
-                selectedPlan === "personal" 
-                  ? "bg-white text-purple-800 shadow-sm" 
-                  : "text-gray-600 hover:text-purple-700"
-              }`}
-            >
-              <div className="flex items-center">
-                <User className="w-4 h-4 mr-2" />
-                Personal
-              </div>
-            </button>
-            <button
-              onClick={() => setSelectedPlan("team")}
-              className={`px-6 py-3 rounded-full transition-all duration-300 font-medium ${
-                selectedPlan === "team" 
-                  ? "bg-white text-purple-800 shadow-sm" 
-                  : "text-gray-600 hover:text-purple-700"
-              }`}
-            >
-              <div className="flex items-center">
-                <Users className="w-4 h-4 mr-2" />
-                Team
-              </div>
-            </button>
-            <button
-              onClick={() => setSelectedPlan("enterprise")}
-              className={`px-6 py-3 rounded-full transition-all duration-300 font-medium ${
-                selectedPlan === "enterprise" 
-                  ? "bg-white text-purple-800 shadow-sm" 
-                  : "text-gray-600 hover:text-purple-700"
-              }`}
-            >
-              <div className="flex items-center">
-                <Building className="w-4 h-4 mr-2" />
-                Enterprise
-              </div>
-            </button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Personal Plan */}
-          <div 
-            className={`relative rounded-2xl overflow-hidden transition-all duration-500 ${
-              selectedPlan === "personal" 
-                ? "border-2 border-purple-600 transform scale-105 shadow-xl" 
-                : "border border-gray-200 shadow-lg opacity-90"
-            }`}
-          >
-            {selectedPlan === "personal" && (
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-violet-500"></div>
-            )}
-            
-            <div className="p-8 bg-white">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="flex items-center mb-2">
-                    <User className="w-5 h-5 text-purple-600 mr-2" />
-                    <span className="text-sm font-medium text-purple-600">PERSONAL</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-1">Individual Plan</h3>
-                  <p className="text-gray-500">Perfect for individual learners</p>
+        <Tabs 
+          defaultValue="personal" 
+          value={selectedPlan} 
+          onValueChange={(value) => setSelectedPlan(value as PlanKey)}
+          className="w-full"
+        >
+          <div className="flex justify-center mb-10">
+            <TabsList className="h-14 p-1 bg-gray-100/80 backdrop-blur-sm rounded-full">
+              <TabsTrigger 
+                value="personal" 
+                className="h-12 px-6 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
+              >
+                <div className="flex items-center space-x-2">
+                  <User className="w-4 h-4" />
+                  <span>Personal</span>
                 </div>
-                <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100">30-DAY FREE TRIAL</Badge>
-              </div>
-              
-              <div className="mt-8 flex items-end">
-                <div className="text-3xl font-bold">₹850</div>
-                <div className="text-gray-500 ml-2 mb-1">/month</div>
-              </div>
-              <div className="flex items-center gap-1 mt-1">
-                <p className="text-sm text-gray-500">After 30-day free trial.</p>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <button className="text-purple-600 hover:text-purple-800">
-                      <Info className="h-4 w-4" />
-                    </button>
-                  </DialogTrigger>
-                  <DialogContent className="bg-white p-6 rounded-xl shadow-xl">
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl font-bold text-purple-800">About Your Free Trial</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4 py-3 text-gray-600">
-                      <p>Your 30-day free trial gives you full access to all Personal Plan features. No payment required during the trial period.</p>
-                      <p>After your trial ends, you'll be automatically billed at ₹850/month unless you cancel at least 24 hours before the trial ends.</p>
-                      <p>You can cancel anytime during your trial through your account settings with no charges.</p>
-                      <p>We'll send you a reminder 3 days before your trial ends.</p>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="team" 
+                className="h-12 px-6 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
+              >
+                <div className="flex items-center space-x-2">
+                  <Users className="w-4 h-4" />
+                  <span>Team</span>
+                </div>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="enterprise" 
+                className="h-12 px-6 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
+              >
+                <div className="flex items-center space-x-2">
+                  <Building className="w-4 h-4" />
+                  <span>Enterprise</span>
+                </div>
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8">
+            {Object.keys(plans).map((planKey) => (
+              <TabsContent key={planKey} value={planKey} className="mt-0">
+                <div className="overflow-hidden rounded-2xl shadow-xl bg-white border border-purple-100">
+                  <div className="h-2 bg-gradient-to-r from-purple-600 to-violet-500"></div>
+                  
+                  <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                    <div className="p-8">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <div className="rounded-full bg-purple-100 p-1.5">
+                          {plans[planKey as PlanKey].icon}
+                        </div>
+                        <span className="text-sm font-medium text-purple-600">{plans[planKey as PlanKey].name}</span>
+                        {planKey !== "enterprise" && (
+                          <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100">FREE TRIAL</Badge>
+                        )}
+                        {planKey === "enterprise" && (
+                          <div className="rounded-full bg-purple-100 p-1">
+                            <Star className="h-4 w-4 text-purple-600" />
+                          </div>
+                        )}
+                      </div>
+                      
+                      <h3 className="text-2xl font-bold mb-2">{plans[planKey as PlanKey].title}</h3>
+                      <p className="text-gray-500 mb-6">{plans[planKey as PlanKey].description}</p>
+                      
+                      <div className="flex items-baseline mb-1">
+                        <span className="text-4xl font-bold">{plans[planKey as PlanKey].price}</span>
+                        <span className="text-gray-500 ml-2">{plans[planKey as PlanKey].period}</span>
+                      </div>
+                      
+                      {planKey !== "enterprise" && (
+                        <div className="flex items-center gap-1 mb-1">
+                          <p className="text-sm text-gray-500">After 30-day free trial.</p>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <button className="text-purple-600 hover:text-purple-800">
+                                <Info className="h-4 w-4" />
+                              </button>
+                            </DialogTrigger>
+                            <DialogContent className="bg-white p-6 rounded-xl max-w-md">
+                              <DialogHeader>
+                                <DialogTitle className="text-xl font-bold text-purple-800">About Your Free Trial</DialogTitle>
+                              </DialogHeader>
+                              <div className="space-y-3 py-3 text-gray-600 text-sm">
+                                <p>Your 30-day free trial gives you full access to all features. No payment required during the trial period.</p>
+                                <p>Cancel anytime during your trial through your account settings with no charges.</p>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      )}
+                      
+                      <p className="text-sm text-gray-500">{plans[planKey as PlanKey].billingInfo}</p>
+                      
+                      <Button className="w-full mt-8 py-6 text-base font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 shadow-lg shadow-purple-200 group">
+                        <span>{planKey === "enterprise" ? "Contact our sales team" : "Start your free trial"}</span>
+                        <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                      </Button>
                     </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              <p className="text-sm text-gray-500 mt-1">Billed monthly or annually. Cancel anytime.</p>
-            </div>
-            
-            <div className="p-8 bg-white border-t border-gray-100">
-              <Button className="w-full py-6 text-base font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 shadow-lg shadow-purple-200 mb-8 group">
-                <span>Start your free trial</span>
-                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Access to 12,000+ top courses</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Certification prep</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Goal-focused recommendations</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">AI-powered coding exercises</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Team Plan */}
-          <div 
-            className={`relative rounded-2xl overflow-hidden transition-all duration-500 ${
-              selectedPlan === "team" 
-                ? "border-2 border-purple-600 transform scale-105 shadow-xl" 
-                : "border border-gray-200 shadow-lg opacity-90"
-            }`}
-          >
-            {selectedPlan === "team" && (
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-violet-500"></div>
-            )}
-            
-            <div className="p-8 bg-white">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="flex items-center mb-2">
-                    <Users className="w-5 h-5 text-purple-600 mr-2" />
-                    <span className="text-sm font-medium text-purple-600">TEAM</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-1">Team Plan</h3>
-                  <p className="text-gray-500">Best for small to medium teams</p>
-                </div>
-                <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100">30-DAY FREE TRIAL</Badge>
-              </div>
-              
-              <div className="mt-8 flex items-end">
-                <div className="text-3xl font-bold">₹1,450</div>
-                <div className="text-gray-500 ml-2 mb-1">/user/year</div>
-              </div>
-              <div className="flex items-center gap-1 mt-1">
-                <p className="text-sm text-gray-500">After 30-day free trial.</p>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <button className="text-purple-600 hover:text-purple-800">
-                      <Info className="h-4 w-4" />
-                    </button>
-                  </DialogTrigger>
-                  <DialogContent className="bg-white p-6 rounded-xl shadow-xl">
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl font-bold text-purple-800">About Your Team Free Trial</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4 py-3 text-gray-600">
-                      <p>Your 30-day free team trial gives you full access to all Team Plan features for up to 20 users. No payment required during the trial period.</p>
-                      <p>After your trial ends, you'll be automatically billed at ₹1,450 per user/year unless you cancel at least 24 hours before the trial ends.</p>
-                      <p>You can cancel anytime during your trial through your account settings with no charges.</p>
-                      <p>We'll send you a reminder 3 days before your trial ends.</p>
+                    
+                    <div className="p-8">
+                      <h4 className="font-semibold text-lg mb-6">What's included:</h4>
+                      <ul className="space-y-4">
+                        {plans[planKey as PlanKey].features.map((feature, index) => (
+                          <li key={index} className="flex items-start">
+                            <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3 flex-shrink-0">
+                              <Check className="h-4 w-4 text-purple-600" />
+                            </div>
+                            <span className="text-gray-700">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              <p className="text-sm text-gray-500 mt-1">Billed annually. Minimum 5 users.</p>
-            </div>
-            
-            <div className="p-8 bg-white border-t border-gray-100">
-              <Button className="w-full py-6 text-base font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 shadow-lg shadow-purple-200 mb-8 group">
-                <span>Start your free trial</span>
-                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
                   </div>
-                  <span className="text-gray-700">Access to 12,000+ top courses</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Certification prep</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Goal-focused recommendations</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">AI-powered coding exercises</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Analytics and adoption reports</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Enterprise Plan */}
-          <div 
-            className={`relative rounded-2xl overflow-hidden transition-all duration-500 ${
-              selectedPlan === "enterprise" 
-                ? "border-2 border-purple-600 transform scale-105 shadow-xl" 
-                : "border border-gray-200 shadow-lg opacity-90"
-            }`}
-          >
-            {selectedPlan === "enterprise" && (
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-violet-500"></div>
-            )}
-            
-            <div className="p-8 bg-white">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="flex items-center mb-2">
-                    <Building className="w-5 h-5 text-purple-600 mr-2" />
-                    <span className="text-sm font-medium text-purple-600">ENTERPRISE</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-1">Enterprise Plan</h3>
-                  <p className="text-gray-500">For large organizations</p>
                 </div>
-                <div className="rounded-full bg-purple-100 p-1">
-                  <Star className="h-5 w-5 text-purple-600" />
-                </div>
-              </div>
-              
-              <div className="mt-8">
-                <div className="text-2xl font-bold">Custom Pricing</div>
-                <p className="text-gray-500 mt-1">Tailored to your organization's needs</p>
-              </div>
-            </div>
-            
-            <div className="p-8 bg-white border-t border-gray-100">
-              <Button className="w-full py-6 text-base font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 shadow-lg shadow-purple-200 mb-8 group">
-                <span>Contact our sales team</span>
-                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Access to 27,000+ top courses</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Certification prep</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Goal-focused recommendations</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">AI-powered coding exercises</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Advanced analytics and insights</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">Dedicated customer success team</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3">
-                    <Check className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <span className="text-gray-700">International course collection (15 languages)</span>
-                </li>
-              </ul>
-            </div>
+              </TabsContent>
+            ))}
           </div>
-        </div>
+        </Tabs>
 
         <div className="mt-16 text-center">
           <p className="text-gray-500 mb-4">Need help choosing the right plan?</p>

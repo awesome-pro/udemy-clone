@@ -82,8 +82,8 @@ export function TopTrends() {
                   ))}
                 </div>
                 
-                <Button className="bg-[#a435f0] hover:bg-[#8710d8] flex items-center">
-                  Read full story <ArrowRight className="h-4 w-4 ml-2" />
+                <Button size={'lg'} className="bg-[#a435f0] cursor-pointer px-10 py-3 rounded-full">
+                  Read full story <ChevronRight className="h-4 w-4 ml-2" />
                 </Button>
               </div>
               
