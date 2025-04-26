@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Check, Info, ChevronRight, Star, Building, Users, User } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,11 +14,14 @@ type PlanDetails = {
   icon: React.ReactNode;
   name: string;
   title: string;
+  subtitle: string;
   description: string;
   price: string;
   period: string;
   billingInfo: string;
   features: string[];
+  ctaText: string;
+  popular?: boolean;
 };
 
 type PlansData = {
@@ -27,16 +30,33 @@ type PlansData = {
 
 export function PricingPlans() {
   const [selectedPlan, setSelectedPlan] = useState<PlanKey>("personal");
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener("resize", checkIfMobile);
+    
+    return () => {
+      window.removeEventListener("resize", checkIfMobile);
+    };
+  }, []);
 
   const plans: PlansData = {
     personal: {
-      icon: <User className="w-4 h-4" />,
+      icon: <User className="w-5 h-5" />,
       name: "PERSONAL",
-      title: "Individual Plan",
-      description: "Perfect for individual learners",
+      title: "Personal Plan",
+      subtitle: "For you",
+      description: "Individual",
       price: "₹850",
-      period: "/month",
+      period: "per month",
       billingInfo: "Billed monthly or annually. Cancel anytime.",
+      ctaText: "Start subscription",
       features: [
         "Access to 12,000+ top courses",
         "Certification prep",
@@ -45,13 +65,16 @@ export function PricingPlans() {
       ]
     },
     team: {
-      icon: <Users className="w-4 h-4" />,
+      icon: <Users className="w-5 h-5" />,
       name: "TEAM",
       title: "Team Plan",
-      description: "Best for small to medium teams",
-      price: "₹1,450",
-      period: "/user/year",
-      billingInfo: "Billed annually. Minimum 5 users.",
+      subtitle: "For your team",
+      description: "2 to 20 people",
+      price: "₹2,000",
+      period: "a month per user",
+      billingInfo: "Billed annually. Cancel anytime.",
+      popular: true,
+      ctaText: "Start subscription",
       features: [
         "Access to 12,000+ top courses",
         "Certification prep",
@@ -61,13 +84,15 @@ export function PricingPlans() {
       ]
     },
     enterprise: {
-      icon: <Building className="w-4 h-4" />,
+      icon: <Building className="w-5 h-5" />,
       name: "ENTERPRISE",
       title: "Enterprise Plan",
-      description: "For large organizations",
-      price: "Custom Pricing",
-      period: "",
-      billingInfo: "Tailored to your organization's needs",
+      subtitle: "For your whole organization",
+      description: "More than 20 people",
+      price: "Custom",
+      period: "pricing",
+      billingInfo: "Contact sales for pricing",
+      ctaText: "Request a demo",
       features: [
         "Access to 27,000+ top courses",
         "Certification prep",
@@ -75,149 +100,145 @@ export function PricingPlans() {
         "AI-powered coding exercises",
         "Advanced analytics and insights",
         "Dedicated customer success team",
-        "International course collection (15 languages)"
+        "International course collection featuring 15 languages",
+        "Customizable content",
+        "Hands-on tech training with add-on",
+        "Strategic implementation services with add-on"
       ]
     }
   };
 
+  // Card component for each plan
+  const PlanCard = ({ planKey }: { planKey: PlanKey }) => {
+    const plan = plans[planKey];
+    
+    return (
+      <div className={`bg-white rounded-xl shadow-lg border transition-all duration-300 h-full flex flex-col overflow-hidden ${plan.popular ? 'border-purple-400 scale-[1.02] shadow-xl' : 'border-gray-200 hover:border-purple-300 hover:shadow-xl'}`}>
+        {plan.popular && (
+          <div className="bg-gradient-to-r from-purple-600 to-violet-600 text-white text-xs font-bold uppercase tracking-wider py-1.5 px-4 text-center">
+            Most Popular
+          </div>
+        )}
+        <div className={`${plan.popular ? 'bg-purple-50' : 'bg-white'} p-6 md:p-8`}>
+          <div className="flex items-center space-x-2 mb-3">
+            <div className={`rounded-full ${plan.popular ? 'bg-purple-200' : 'bg-purple-100'} p-2`}>
+              {plan.icon}
+            </div>
+            <span className="text-sm font-medium text-purple-700">{plan.subtitle}</span>
+          </div>
+          
+          <h3 className="text-2xl font-bold mb-2">{plan.title}</h3>
+          <p className="text-gray-500 text-sm mb-4">{plan.description}</p>
+          
+          <div className="flex items-baseline mb-2">
+            <span className="text-3xl font-bold">{plan.price}</span>
+            <span className="text-gray-600 ml-2 text-sm">{plan.period}</span>
+          </div>
+          <p className="text-sm text-gray-500 mb-6">{plan.billingInfo}</p>
+          
+          <Button 
+            className={`w-full py-6 text-sm font-semibold rounded-lg shadow-md transition-all group ${
+              planKey === 'enterprise' 
+                ? 'bg-white border-2 border-purple-600 text-purple-700 hover:bg-purple-50'
+                : 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white shadow-purple-100'
+            }`}
+          >
+            <span>{plan.ctaText}</span>
+            <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Button>
+        </div>
+        
+        <div className="p-6 md:p-8 bg-gray-50 flex-grow">
+          <h4 className="font-medium text-sm text-gray-800 mb-4 uppercase tracking-wide">What's included:</h4>
+          <ul className="space-y-3">
+            {plan.features.map((feature, index) => (
+              <li key={index} className="flex items-start">
+                <div className="rounded-full bg-primary/10 p-1 mt-0.5 mr-3 flex-shrink-0">
+                  <Check className="h-3.5 w-3.5 text-primary" />
+                </div>
+                <span className="text-gray-700 text-sm">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 max-w-7xl">
-        <div className=" mb-12">
+        <div className="text-center mb-12 md:mb-16">
           <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100 mb-4 px-3 py-1 text-xs font-medium rounded-full">
-            FLEXIBLE PRICING
+            PRICING PLANS
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-violet-600">
             Accelerate growth — for you or your organization
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Choose the perfect plan to reach your goals faster, whether for you or your entire organization.
+          <p className="text-lg text-gray-600 mx-auto">
+            Reach goals faster with one of our plans or programs. Try one free today or contact sales to learn more.
           </p>
         </div>
 
-        <Tabs 
-          defaultValue="personal" 
-          value={selectedPlan} 
-          onValueChange={(value) => setSelectedPlan(value as PlanKey)}
-          className="w-full"
-        >
-          <div className="flex justify-center mb-10">
-            <TabsList className="h-14 p-1 bg-gray-100/80 backdrop-blur-sm rounded-full">
-              <TabsTrigger 
-                value="personal" 
-                className="h-12 px-6 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
-              >
-                <div className="flex items-center space-x-2">
-                  <User className="w-4 h-4" />
-                  <span>Personal</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="team" 
-                className="h-12 px-6 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
-              >
-                <div className="flex items-center space-x-2">
-                  <Users className="w-4 h-4" />
-                  <span>Team</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="enterprise" 
-                className="h-12 px-6 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
-              >
-                <div className="flex items-center space-x-2">
-                  <Building className="w-4 h-4" />
-                  <span>Enterprise</span>
-                </div>
-              </TabsTrigger>
-            </TabsList>
-          </div>
+        {/* Desktop & Tablet View - Show all cards in grid */}
+        <div className="hidden md:grid md:grid-cols-3 gap-6 mb-16">
+          {Object.keys(plans).map((planKey) => (
+            <PlanCard key={planKey} planKey={planKey as PlanKey} />
+          ))}
+        </div>
 
-          <div className="grid grid-cols-1 gap-8">
+        {/* Mobile View - Show as tabs */}
+        <div className="md:hidden">
+          <Tabs 
+            defaultValue="personal" 
+            value={selectedPlan} 
+            onValueChange={(value) => setSelectedPlan(value as PlanKey)}
+            className="w-full"
+          >
+            <div className="flex justify-center mb-8">
+              <TabsList className="h-14 p-1 bg-gray-100/80 backdrop-blur-sm rounded-full">
+                <TabsTrigger 
+                  value="personal" 
+                  className="h-12 px-4 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
+                >
+                  <div className="flex items-center space-x-2">
+                    <User className="w-4 h-4" />
+                    <span>Personal</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="team" 
+                  className="h-12 px-4 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
+                >
+                  <div className="flex items-center space-x-2">
+                    <Users className="w-4 h-4" />
+                    <span>Team</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="enterprise" 
+                  className="h-12 px-4 data-[state=active]:bg-white data-[state=active]:text-purple-800 data-[state=active]:shadow-sm rounded-full transition-all duration-300"
+                >
+                  <div className="flex items-center space-x-2">
+                    <Building className="w-4 h-4" />
+                    <span>Enterprise</span>
+                  </div>
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
             {Object.keys(plans).map((planKey) => (
               <TabsContent key={planKey} value={planKey} className="mt-0">
-                <div className="overflow-hidden rounded-2xl shadow-xl bg-white border border-purple-100">
-                  <div className="h-2 bg-gradient-to-r from-purple-600 to-violet-500"></div>
-                  
-                  <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
-                    <div className="p-8">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <div className="rounded-full bg-purple-100 p-1.5">
-                          {plans[planKey as PlanKey].icon}
-                        </div>
-                        <span className="text-sm font-medium text-purple-600">{plans[planKey as PlanKey].name}</span>
-                        {planKey !== "enterprise" && (
-                          <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100">FREE TRIAL</Badge>
-                        )}
-                        {planKey === "enterprise" && (
-                          <div className="rounded-full bg-purple-100 p-1">
-                            <Star className="h-4 w-4 text-purple-600" />
-                          </div>
-                        )}
-                      </div>
-                      
-                      <h3 className="text-2xl font-bold mb-2">{plans[planKey as PlanKey].title}</h3>
-                      <p className="text-gray-500 mb-6">{plans[planKey as PlanKey].description}</p>
-                      
-                      <div className="flex items-baseline mb-1">
-                        <span className="text-4xl font-bold">{plans[planKey as PlanKey].price}</span>
-                        <span className="text-gray-500 ml-2">{plans[planKey as PlanKey].period}</span>
-                      </div>
-                      
-                      {planKey !== "enterprise" && (
-                        <div className="flex items-center gap-1 mb-1">
-                          <p className="text-sm text-gray-500">After 30-day free trial.</p>
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <button className="text-purple-600 hover:text-purple-800">
-                                <Info className="h-4 w-4" />
-                              </button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-white p-6 rounded-xl max-w-md">
-                              <DialogHeader>
-                                <DialogTitle className="text-xl font-bold text-purple-800">About Your Free Trial</DialogTitle>
-                              </DialogHeader>
-                              <div className="space-y-3 py-3 text-gray-600 text-sm">
-                                <p>Your 30-day free trial gives you full access to all features. No payment required during the trial period.</p>
-                                <p>Cancel anytime during your trial through your account settings with no charges.</p>
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        </div>
-                      )}
-                      
-                      <p className="text-sm text-gray-500">{plans[planKey as PlanKey].billingInfo}</p>
-                      
-                      <Button className="w-full mt-8 py-6 text-base font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 shadow-lg shadow-purple-200 group">
-                        <span>{planKey === "enterprise" ? "Contact our sales team" : "Start your free trial"}</span>
-                        <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                      </Button>
-                    </div>
-                    
-                    <div className="p-8">
-                      <h4 className="font-semibold text-lg mb-6">What's included:</h4>
-                      <ul className="space-y-4">
-                        {plans[planKey as PlanKey].features.map((feature, index) => (
-                          <li key={index} className="flex items-start">
-                            <div className="rounded-full bg-purple-100 p-1 mt-0.5 mr-3 flex-shrink-0">
-                              <Check className="h-4 w-4 text-purple-600" />
-                            </div>
-                            <span className="text-gray-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <PlanCard planKey={planKey as PlanKey} />
               </TabsContent>
             ))}
-          </div>
-        </Tabs>
+          </Tabs>
+        </div>
 
         <div className="mt-16 text-center">
-          <p className="text-gray-500 mb-4">Need help choosing the right plan?</p>
-          <Button variant="outline" className="border-purple-300 text-purple-700 hover:bg-purple-50">
-            Schedule a consultation
+          <p className="text-gray-600 mb-4">Need a custom solution for your business?</p>
+          <Button variant="outline" className="border-purple-300 text-purple-700 hover:bg-purple-50 rounded-full px-6">
+            Contact our sales team
           </Button>
         </div>
       </div>

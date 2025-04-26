@@ -64,7 +64,7 @@ export function HeroSection() {
             className={`absolute inset-0 w-full h-full ${heroSlides[currentSlide].bgColor}`}
           >
             <div className="container mx-auto h-full px-4 md:px-6">
-              <div className="flex flex-col md:flex-row h-full items-center">
+              <div className="flex flex-col-reverse md:flex-row h-full items-center">
                 <div className="md:w-1/2 pt-12 md:pt-0 z-10">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -81,7 +81,7 @@ export function HeroSection() {
                     <p className="text-gray-600 mb-6">
                       {heroSlides[currentSlide].description}
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
                       {heroSlides[currentSlide].ctaButtons.map((button, index) => (
                         <Button
                           key={index}

@@ -41,7 +41,6 @@ interface Course {
   bestseller?: boolean;
 }
 
-// Mock course data
 const coursesData: Record<string, Course[]> = {
   "Data Science": [
     {
@@ -90,7 +89,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.8,
       reviews: 9842,
       price: 1999,
-      image: "/api/placeholder/400/225",
+      image: "https://img-c.udemycdn.com/course/240x135/5077642_2dda_7.jpg",
       bestseller: true
     },
     {
@@ -100,7 +99,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.7,
       reviews: 3241,
       price: 1299,
-      image: "/api/placeholder/400/225"
+      image: "https://img-c.udemycdn.com/course/240x135/5266298_5e2a_3.jpg"
     },
     {
       id: 3,
@@ -109,7 +108,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.5,
       reviews: 296,
       price: 829,
-      image: "/api/placeholder/400/225"
+      image: "https://img-c.udemycdn.com/course/240x135/5248846_2f41_4.jpg"
     },
     {
       id: 4,
@@ -118,7 +117,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.5,
       reviews: 262,
       price: 829,
-      image: "/api/placeholder/400/225"
+      image: "https://img-c.udemycdn.com/course/240x135/5356786_d4d7_2.jpg"
     }
   ],
   "Python": [
@@ -129,7 +128,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.7,
       reviews: 125640,
       price: 3499,
-      image: "/api/placeholder/400/225",
+      image: "https://img-c.udemycdn.com/course/240x135/903744_8eb2.jpg",
       bestseller: true
     },
     {
@@ -139,7 +138,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.6,
       reviews: 84590,
       price: 2899,
-      image: "/api/placeholder/400/225"
+      image: "https://img-c.udemycdn.com/course/240x135/2473048_8255_5.jpg"
     },
     {
       id: 9,
@@ -148,7 +147,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.7,
       reviews: 237890,
       price: 3699,
-      image: "/api/placeholder/400/225",
+      image: "https://img-c.udemycdn.com/course/240x135/2776760_f176_10.jpg",
       bestseller: true
     },
     {
@@ -158,7 +157,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.5,
       reviews: 18735,
       price: 2499,
-      image: "/api/placeholder/400/225"
+      image: "https://img-c.udemycdn.com/course/240x135/1189208_d9a3_6.jpg"
     }
   ],
   "IT Certifications": [
@@ -169,7 +168,7 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.7,
       reviews: 182734,
       price: 3699,
-      image: "/api/placeholder/400/225",
+      image: "https://img-c.udemycdn.com/course/240x135/3891194_7f8f_4.jpg",
       bestseller: true
     },
     {
@@ -179,10 +178,267 @@ const coursesData: Record<string, Course[]> = {
       rating: 4.8,
       reviews: 59632,
       price: 3199,
-      image: "/api/placeholder/400/225"
+      image: "https://img-c.udemycdn.com/course/240x135/5173932_2df7.jpg"
+    },
+    {
+      id: 13,
+      title: "Microsoft Azure Fundamentals AZ-900 Certification Exam Prep",
+      instructors: "Scott Duffy, MCSE, MCSD, Azure Solutions Architect",
+      rating: 4.6,
+      reviews: 42890,
+      price: 2499,
+      image: "https://img-c.udemycdn.com/course/240x135/3994604_1d3f_2.jpg"
+    },
+    {
+      id: 14,
+      title: "Cisco CCNA 200-301 – Complete Guide 2025",
+      instructors: "Neil Anderson, Flackbox",
+      rating: 4.8,
+      reviews: 37450,
+      price: 3899,
+      image: "https://img-c.udemycdn.com/course/240x135/2694854_a637_5.jpg",
+      bestseller: true
+    }
+  ],
+  "Leadership": [
+    {
+      id: 15,
+      title: "Leadership: Practical Leadership Skills for 2025",
+      instructors: "Chris Croft, Management Trainer and Consultant",
+      rating: 4.6,
+      reviews: 28734,
+      price: 1999,
+      image: "https://img-c.udemycdn.com/course/240x135/1259404_72d4_7.jpg",
+      bestseller: true
+    },
+    {
+      id: 16,
+      title: "The Complete Leadership Masterclass for New Managers",
+      instructors: "TJ Walker, Communication Skills Expert",
+      rating: 4.5,
+      reviews: 12450,
+      price: 1799,
+      image: "https://img-c.udemycdn.com/course/240x135/1361742_f2d0_3.jpg"
+    },
+    {
+      id: 17,
+      title: "Executive Presence: Leadership Communication Skills",
+      instructors: "Jennifer Hennings, Executive Coach",
+      rating: 4.7,
+      reviews: 9876,
+      price: 2299,
+      image: "https://img-c.udemycdn.com/course/240x135/1533072_cdb2_2.jpg"
+    },
+    {
+      id: 18,
+      title: "Emotional Intelligence for Leadership & Management",
+      instructors: "Robin Hills, Director at Ei4Change",
+      rating: 4.6,
+      reviews: 15320,
+      price: 1699,
+      image: "https://img-c.udemycdn.com/course/240x135/1761310_1f3e_4.jpg"
+    }
+  ],
+  "Web Development": [
+    {
+      id: 19,
+      title: "The Complete 2025 Web Development Bootcamp",
+      instructors: "Dr. Angela Yu, Developer & Lead Instructor",
+      rating: 4.7,
+      reviews: 245890,
+      price: 3499,
+      image: "https://img-c.udemycdn.com/course/240x135/1565838_e54e_16.jpg",
+      bestseller: true
+    },
+    {
+      id: 20,
+      title: "The Complete JavaScript Course 2025: From Zero to Expert",
+      instructors: "Jonas Schmedtmann, Web Developer & Designer",
+      rating: 4.8,
+      reviews: 176540,
+      price: 2999,
+      image: "https://img-c.udemycdn.com/course/240x135/851712_fc61_6.jpg",
+      bestseller: true
+    },
+    {
+      id: 21,
+      title: "React - The Complete Guide 2025 (incl. React Router & Redux)",
+      instructors: "Maximilian Schwarzmüller, Professional Web Developer",
+      rating: 4.6,
+      reviews: 189760,
+      price: 3299,
+      image: "https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg"
+    },
+    {
+      id: 22,
+      title: "Next.js & React - The Complete Guide 2025",
+      instructors: "Maximilian Schwarzmüller, Professional Web Developer",
+      rating: 4.7,
+      reviews: 42560,
+      price: 2799,
+      image: "https://img-c.udemycdn.com/course/240x135/3873464_403c.jpg"
+    }
+  ],
+  "Communication": [
+    {
+      id: 23,
+      title: "Complete Public Speaking Masterclass For Every Occasion",
+      instructors: "TJ Walker, Communication Skills Expert",
+      rating: 4.5,
+      reviews: 32450,
+      price: 1999,
+      image: "https://img-c.udemycdn.com/course/240x135/1333946_3680_4.jpg"
+    },
+    {
+      id: 24,
+      title: "Business Communication Skills: Business Writing & Grammar",
+      instructors: "Alex Genadinik, Business Coach",
+      rating: 4.4,
+      reviews: 28760,
+      price: 1699,
+      image: "https://img-c.udemycdn.com/course/240x135/1132290_d46d_4.jpg"
+    },
+    {
+      id: 25,
+      title: "Assertiveness: You Can Speak Up For Yourself!",
+      instructors: "Chris Croft, Management Trainer and Consultant",
+      rating: 4.6,
+      reviews: 19870,
+      price: 1899,
+      image: "https://img-c.udemycdn.com/course/240x135/1355610_a4c6_3.jpg",
+      bestseller: true
+    },
+    {
+      id: 26,
+      title: "Conflict Management with Emotional Intelligence",
+      instructors: "Robin Hills, Director at Ei4Change",
+      rating: 4.5,
+      reviews: 12340,
+      price: 1799,
+      image: "https://img-c.udemycdn.com/course/240x135/1235692_0e2f_3.jpg"
+    }
+  ],
+  "Business Analytics & Intelligence": [
+    {
+      id: 27,
+      title: "Microsoft Power BI - Up & Running With Power BI Desktop",
+      instructors: "Maven Analytics, Award-winning BI & Analytics Education",
+      rating: 4.6,
+      reviews: 45670,
+      price: 2499,
+      image: "https://img-c.udemycdn.com/course/240x135/1756340_0543_4.jpg",
+      bestseller: true
+    },
+    {
+      id: 28,
+      title: "Tableau 2025 A-Z: Hands-On Tableau Training for Data Science",
+      instructors: "Kirill Eremenko, Data Scientist",
+      rating: 4.6,
+      reviews: 87650,
+      price: 2799,
+      image: "https://img-c.udemycdn.com/course/240x135/937678_abd2_2.jpg"
+    },
+    {
+      id: 29,
+      title: "SQL - MySQL for Data Analytics and Business Intelligence",
+      instructors: "365 Careers, Creating opportunities for Data Science students",
+      rating: 4.7,
+      reviews: 32450,
+      price: 2299,
+      image: "https://img-c.udemycdn.com/course/240x135/1405188_4be1_3.jpg"
+    },
+    {
+      id: 30,
+      title: "Advanced Excel: Top Excel Tips & Formulas",
+      instructors: "Maven Analytics, Award-winning BI & Analytics Education",
+      rating: 4.7,
+      reviews: 28760,
+      price: 1999,
+      image: "https://img-c.udemycdn.com/course/240x135/793796_0e89_2.jpg",
+      bestseller: true
+    }
+  ],
+  "Marketing": [
+    {
+      id: 31,
+      title: "The Complete Digital Marketing Course - 12 Courses in 1",
+      instructors: "Rob Percival, Daragh Walsh, Codestars",
+      rating: 4.5,
+      reviews: 156780,
+      price: 3499,
+      image: "https://img-c.udemycdn.com/course/240x135/914296_3670_8.jpg",
+      bestseller: true
+    },
+    {
+      id: 32,
+      title: "Facebook Ads & Instagram Ads 2025 MASTERY",
+      instructors: "Coursenvy, Digital Marketing Agency",
+      rating: 4.4,
+      reviews: 45670,
+      price: 2499,
+      image: "https://img-c.udemycdn.com/course/240x135/2219511_c9a0_7.jpg"
+    },
+    {
+      id: 33,
+      title: "The Complete SEO Course: From Beginner to Advanced",
+      instructors: "Joshua George, SEO Expert",
+      rating: 4.6,
+      reviews: 28760,
+      price: 2299,
+      image: "https://img-c.udemycdn.com/course/240x135/3254610_3e28_2.jpg"
+    },
+    {
+      id: 34,
+      title: "Email Marketing 2025: Build Email Lists & Write Newsletters",
+      instructors: "Phil Ebiner, Top-Rated Instructor",
+      rating: 4.5,
+      reviews: 19870,
+      price: 1999,
+      image: "https://img-c.udemycdn.com/course/240x135/1412122_9aeb_8.jpg"
+    }
+  ],
+  "Design": [
+    {
+      id: 35,
+      title: "The Complete Graphic Design Theory for Beginners Course",
+      instructors: "Lindsay Marsh, Graphic Design Master",
+      rating: 4.6,
+      reviews: 32450,
+      price: 2499,
+      image: "https://img-c.udemycdn.com/course/240x135/1643044_e281_5.jpg",
+      bestseller: true
+    },
+    {
+      id: 36,
+      title: "Adobe Photoshop CC – Advanced Training Course",
+      instructors: "Daniel Walter Scott, Adobe Certified Instructor",
+      rating: 4.7,
+      reviews: 28760,
+      price: 2799,
+      image: "https://img-c.udemycdn.com/course/240x135/1192036_153a_6.jpg"
+    },
+    {
+      id: 37,
+      title: "UI/UX Design: Create High-Fidelity Designs and Prototypes",
+      instructors: "Daniel Walter Scott, Adobe Certified Instructor",
+      rating: 4.7,
+      reviews: 19870,
+      price: 2299,
+      image: "https://img-c.udemycdn.com/course/240x135/2196482_8e15_7.jpg",
+      bestseller: true
+    },
+    {
+      id: 38,
+      title: "The Complete Blender Creator: Learn 3D Modelling for Beginners",
+      instructors: "GameDev.tv Team, Yann Burrett",
+      rating: 4.6,
+      reviews: 45670,
+      price: 2999,
+      image: "https://img-c.udemycdn.com/course/240x135/1754098_e0df_3.jpg"
     }
   ]
 };
+
 
 // Function to get courses based on active category
 const getCoursesByCategory = (category: string): Course[] => {
