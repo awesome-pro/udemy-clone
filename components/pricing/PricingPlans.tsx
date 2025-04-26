@@ -82,13 +82,13 @@ export function PricingPlans() {
 
   return (
     <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <div className="text-center mb-12">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <div className=" mb-12">
           <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100 mb-4 px-3 py-1 text-xs font-medium rounded-full">
             FLEXIBLE PRICING
           </Badge>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-violet-600">
-            Accelerate Your Growth Journey
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-violet-600">
+            Accelerate growth — for you or your organization
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Choose the perfect plan to reach your goals faster, whether for you or your entire organization.

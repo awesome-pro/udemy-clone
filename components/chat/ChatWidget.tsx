@@ -152,7 +152,7 @@ export function ChatWidget() {
 
       {/* Notification badge */}
       {!isOpen && (
-        <Badge className="absolute -top-2 -right-2 bg-red-500 text-white border-2 border-white">
+        <Badge className="absolute rounded-full -top-2 -right-2 bg-red-500 text-white border-2 border-white">
           2
         </Badge>
       )}

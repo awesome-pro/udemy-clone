@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Merriweather } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import ChatWidget from "@/components/chat/ChatWidget";
@@ -9,6 +9,14 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
+
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  subsets: ["latin"],
+  weight: ["700", "900"],
+  display: "swap",
+});
+
 
 export const metadata: Metadata = {
   title: "Online Courses - Learn Anything, On Your Schedule | Udemy",
@@ -24,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} antialiased`}
+        className={`${merriweather.variable} ${inter.variable} antialiased`}
       >
         <ThemeProvider
             attribute="class"

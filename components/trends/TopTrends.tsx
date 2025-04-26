@@ -22,9 +22,19 @@ export function TopTrends() {
   
   const caseStudies: CaseStudy[] = [
     {
-      id: 1,
+      id: 0,
       company: "Booz | Allen | Hamilton",
       title: "Booz Allen Hamilton Unlocks Talent Retention and Productivity Through Upskilling",
+      stats: [
+        { value: "93%", description: "retention rate among participating employees" },
+        { value: "65%", description: "of learners noted a positive impact on their productivity" },
+      ],
+      image: "https://cms-images.udemycdn.com/content/c4gpjcmcsk/png/UB_Case_Studies_Booz_Allen_image.png?position=c&quality=80&x.app=portals",
+    },
+    {
+      id: 1,
+      company: "Capital One",
+      title: "Capital One Accelerates Transformational Learning through Udemy Business",
       stats: [
         { value: "93%", description: "retention rate among participating employees" },
         { value: "65%", description: "of learners noted a positive impact on their productivity" },
@@ -64,7 +74,7 @@ export function TopTrends() {
   const activeCase = caseStudies[activeSlide];
 
   return (
-    <section className="py-16 px-6 md:px-12 bg-purple-100">
+    <section className="py-16 px-6 md:px-12 bg-gray-100">
         <h2 className="text-3xl font-bold mb-12">Top trends for the future of work</h2>
           <Card className="grid grid-cols-1 lg:grid-cols-2 rounded-4xl p-0">
             {/* Content */}

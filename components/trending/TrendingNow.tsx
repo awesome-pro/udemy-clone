@@ -43,9 +43,9 @@ export function TrendingNow() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gray-100">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-4">Trending Now</h2>
+        <h2 className="text-4xl font-bold mb-4">Trending Now</h2>
         <Separator className="my-4" />
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* ChatGPT section */}

@@ -274,17 +274,18 @@ export default function SkillsCoursesSection() {
           <div className="overflow-x-auto hide-scrollbar">
             <nav className="flex space-x-1 border-b border-gray-200 min-w-max">
               {domainCategories.map((domain) => (
-                <button
+                <Button
+                variant={'ghost'}
                   key={domain}
                   onClick={() => setActiveDomain(domain)}
-                  className={`px-5 py-4 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                  className={`px-5 py-4 text-sm font-medium whitespace-nowrap transition-all duration-200 bg-transparent hover:bg-primary/20 hover:text-primary ${
                     activeDomain === domain
-                      ? "text-primary border-b-2 border-gray-900"
+                      ? "text-primary border-b-2 border-primary bg-primary/30"
                       : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {domain}
-                </button>
+                </Button>
               ))}
             </nav>
           </div>
@@ -297,9 +298,9 @@ export default function SkillsCoursesSection() {
         {/* Skills pill buttons */}
         <div className="relative mb-12">
           <div className="overflow-x-auto hide-scrollbar pb-2">
-            <div className="flex space-x-3 min-w-max">
+            <div className="flex space-x-3 min-w-max ">
               {skillCategories.map((skill) => (
-                <button
+                <Button
                   key={skill.name}
                   onClick={() => setActiveSkill(skill.name)}
                   className={`rounded-full px-4 py-2 flex items-center transition-all duration-200 ${
@@ -314,7 +315,7 @@ export default function SkillsCoursesSection() {
                 >
                   <span className="font-medium">{skill.name}</span>
                   <span className="ml-2 text-xs opacity-80">{skill.learners}</span>
-                </button>
+                </Button>
               ))}
             </div>
           </div>

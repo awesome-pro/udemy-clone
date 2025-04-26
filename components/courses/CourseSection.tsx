@@ -199,7 +199,7 @@ function CourseCard({
         />
         
         {isHovered && (
-          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center transition-opacity duration-300" style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+          <div className="absolute z-20 w-full h-full inset-0 bg-black bg-opacity-60 flex items-center justify-center transition-opacity duration-300" style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
             <div className="text-white text-center p-4">
               <div className="mb-2" >
                 <Button className="bg-white text-gray-800 font-bold py-2 px-4 rounded-lg flex items-center justify-center mx-auto hover:bg-gray-100 transition-colors">
@@ -316,20 +316,9 @@ export function CourseSection() {
     >
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="bg-indigo-100 rounded-full p-2">
-                <TrendingUp className="h-5 w-5 text-indigo-600" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500">
-                Most Popular Courses
-              </h2>
-            </div>
-            <p className="text-gray-600 max-w-2xl">
-              Handpicked by our experts, these courses have helped thousands of students advance their careers. Limited-time offers available!
-            </p>
-          </div>
-          
+          <h2 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500">
+            Learners are Viewing
+          </h2>
           <Button
             variant="outline"
             className="hidden md:flex items-center gap-2 mt-4 md:mt-0 border-indigo-200 text-indigo-700 hover:bg-indigo-50"
@@ -427,8 +416,8 @@ export function CourseSection() {
                   size="sm"
                   className={`w-10 h-10 rounded-full p-0 ${
                     Math.floor(startIndex / itemsPerPage) === idx
-                      ? "bg-indigo-100 text-indigo-700 font-medium"
-                      : "text-gray-500 hover:bg-indigo-50"
+                      ? "bg-primary/20 text-primary font-medium"
+                      : "text-gray-500 hover:bg-primary/20"
                   }`}
                   onClick={() => setStartIndex(idx * itemsPerPage)}
                 >
